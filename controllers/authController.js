@@ -37,12 +37,19 @@ const createUser = async (req, res) => {
 
         // Se genera el token con el id y el nombre del usuario
         const token = await JWTGenerator(usuario.id, usuario.name);
+
+        // En el objeto 'user' se guardan los datos del usuario
+        const user = {
+            name: usuario.name, 
+            uid: usuario._id
+        };
         
         // Se devuelve respuesta de status 201 indicando que la solicitud ha tenido éxito y se ha llevado a cabo a la creación del registro del usuario
         return res.status(201).json({
             ok: true, 
             msg: 'Usuario registrado correctamente.', 
-            token 
+            token, 
+            user 
         });
 
     } catch (error) {
@@ -91,8 +98,7 @@ const loginUser = async (req, res) => {
 
         // En el objeto 'user' se guardan los datos del usuario
         const user = {
-            name: usuario.name, 
-            email: usuario.email, 
+            name: usuario.name,  
             uid: usuario._id
         };
         
