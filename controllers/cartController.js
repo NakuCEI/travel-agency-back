@@ -3,8 +3,8 @@ const Cart = require('../models/CartModel');
 
 // Método para recoger los datos del carrito de compra
 const getCart = async (req, res) => {
-    // Se identifica el carrito de compra del usuario por su nombre e email y se guarda en una constante
-    const cart = await Cart.find().populate('user', 'name email');
+    // Se identifica el carrito de compra del usuario por su uid y se guarda en una constante
+    const cart = await Cart.find({ user: req.uid });
         
     // Se devuelve respuesta de status 200 indicando que la solicitud ha tenido éxito y se envían los datos del carrito de compra del usuario
     return res.status(200).json({

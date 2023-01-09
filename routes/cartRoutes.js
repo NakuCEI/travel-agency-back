@@ -29,7 +29,7 @@ const errorEndDate = 'Debes indicar la fecha de finalización.';
 router.use(validateJWT);
 
 // Ruta para recoger el contenido del carrito de compra
-router.get('/', getCart);
+router.get('/:id', getCart);
 
 // Ruta para crear un ítem en el carrito de compra
 router.post('/', [ 
