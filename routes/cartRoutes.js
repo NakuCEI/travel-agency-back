@@ -13,7 +13,8 @@ const {
     getCart, 
     createCartItem, 
     updateCartItem, 
-    deleteCartItem 
+    deleteCartItem, 
+    deleteUserCartItems 
 } = require('../controllers/cartController');
 
 // Instancia para el Router
@@ -47,6 +48,9 @@ router.put('/:id', [
 
 // Ruta para eliminar un ítem en el carrito de compra
 router.delete('/:id', deleteCartItem);
+
+// Ruta para eliminar varios ítems en el carrito de compra de un usuario
+router.delete('/delete/:id', deleteUserCartItems);
 
 // Exportación de rutas
 module.exports = router;

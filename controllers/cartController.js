@@ -151,10 +151,47 @@ const deleteCartItem = async (req, res) => {
     }
 };
 
+// Método para eliminar los productos del carrito de compra de un usuario
+const deleteUserCartItems = async (req, res) => {
+        
+    // Bloque try/catch para la gestión con la bbdd
+    try {
+
+        // Se guarda en una constante el número de los items eliminados mediante el id del usuario en bbdd
+        const deletedCartItems = await Cart.deleteMany({ user: req.uid });
+
+        // Se comprueba que los items existen
+        if (!deletedCartItems) {
+            // Al no existir los items se devuelve un status 404 para indicar que la bbdd no puede encontrar los recursos solicitados
+            return res.status(404).json({
+                ok: false, 
+                msg: 'No hay items con ese id de usuario en el carrito de compra.'
+            });
+        };
+
+        // Si existen se devuelve respuesta de status 200 indicando que la solicitud ha tenido éxito y se envía el número de los ítems del carrito de compra eliminados
+        return res.status(200).json({
+            ok: true, 
+            msg: 'Items eliminados en el carrito de compra.', 
+            deletedCartItems 
+        });
+        
+    } catch (error) {
+        // En caso de error de servidor se devuelve un status 500 para indicar que el servidor no puede completar la petición
+        console.log(error);
+        return res.status(500).json({
+            ok: false, 
+            msg: 'Contacta con el administrador.'
+        });
+    }
+};
+
+
 // Exportación de métodos del módulo
 module.exports = {
     getCart, 
     createCartItem, 
     updateCartItem, 
-    deleteCartItem 
+    deleteCartItem, 
+    deleteUserCartItems 
 };
